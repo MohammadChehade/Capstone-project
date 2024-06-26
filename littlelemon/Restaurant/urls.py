@@ -1,16 +1,16 @@
 from django.urls import path,include
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import UserViewSet
+from .views import UserViewSet,MenuItemsView, SingleMenuItemView,BookingViewSet
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'booking', BookingViewSet)
+
 
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('menu/', views.MenuItemsView.as_view(), name='menu-list'),
-    path('menu/<int:pk>', views.SingleMenuItemView.as_view(), name='menu-detail'),
-    path('booking/', views.BookingViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('booking/<int:pk>/', views.BookingViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+    path('menu-items/', MenuItemsView.as_view(), name='menu-list'),
+    path('menu-items/<int:pk>/', SingleMenuItemView.as_view(), name='menu-detail'),
 ]
